@@ -30,20 +30,43 @@ namespace EpdmStandAloneCS.Models
         public List<File> Files { get; set; } = new List<File>();
         public List<Folder> Subfolders { get; set; } = new List<Folder>();
 
-        private void TraverseRecursive(Folder subfolder, Action<FileFolderBase> action)
+        /// <summary>
+        /// Private recursive traversal method.
+        /// </summary>
+        /// <param name="folder"></param>
+        /// <param name="action"></param>
+        private void TraverseRecursive(Folder folder, Action<FileFolderBase> action)
         {
-            action(subfolder);
+            // NOTE: The order of the two foreach loops below as well as where precisely the recursive call occurs directly has a direct effect on the order that the objects will be traversed in. 
+            
+            // Currently, the fact that the subfolders loop is first, means that the overall recursion will be such that we will walk 
+            // down each subfolder path from the top-level to full depth (until there are no subfolders) then bounce back 
+            // up ONE level (second-to-deepest level), move to the next subfolder and so on.
 
-            foreach (File f in subfolder.Files)
+            // I.e., this is pretty much the simplest code that is garaunteed to touch everything albeit the order in which it traverses things is arguably couterintuitive depending on the need.
+
+            // traverse current level subfolders   
+            foreach (Folder sf in folder.Subfolders)
+            {
+                // recurse
+                TraverseRecursive(sf, action);
+
+                // invoke delegate
+                action(sf);
+            }
+
+            // traverse current level files
+            foreach (File f in folder.Files)
                 action(f);
-
-            TraverseRecursive(subfolder, action);
         }
 
+        /// <summary>
+        /// Traverses instance and calls the argument delegate on each/every object (file or folder) in the hierarchical structure.
+        /// </summary>
+        /// <param name="action"></param>
         public void Traverse(Action<FileFolderBase> action)
         {
-            foreach(Folder sf in this.Subfolders)
-                TraverseRecursive(sf, action);
+            TraverseRecursive(this, action);
         }
     }
 }

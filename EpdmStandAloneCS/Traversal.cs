@@ -1,16 +1,6 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
+﻿using System;
 using EPDM.Interop.epdm;
 using EpdmStandAloneCS.Models;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
 
 namespace EpdmStandAloneCS
 {
