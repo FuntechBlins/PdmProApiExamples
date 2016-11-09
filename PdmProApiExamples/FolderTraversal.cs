@@ -1,13 +1,13 @@
 ﻿using System;
 using EPDM.Interop.epdm;
-using EpdmStandAloneCS.Models;
+using PdmProStandAlone.Models;
 
-namespace EpdmStandAloneCS
+namespace PdmProStandAlone
 {
     /// <summary>
     /// Examples of PDM vault folder/file traversal.
     /// </summary>
-    public static class Traversal
+    public static class FolderTraversal
     {
         /// <summary>
         /// Traverses an argument vault folder object recursively and returns a <see cref="Folder"/> instance 

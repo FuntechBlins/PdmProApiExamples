@@ -2,10 +2,18 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using EPDM.Interop.epdm;
-using EpdmStandAloneCS.Models;
+using PdmProStandAlone.Models;
+using System.Collections.Generic;
 
-namespace EpdmStandAloneCS
+namespace PdmProStandAlone
 {
+    public class MyObject
+    {
+        public int Id { get; set; }
+        public string Something { get; set; }
+        public string SomethingElse { get; set; }
+    }
+
     static class Program
     {
         /// <summary>
@@ -31,14 +39,26 @@ namespace EpdmStandAloneCS
                 Debug.WriteLine(comEx.Message);
             }
 
-            Folder rootFolder = Traversal.GetFolderTree(vault.RootFolder);
-
+            // Traverse folders example
+            Folder rootFolder = FolderTraversal.GetFolderTree(vault.RootFolder);
             rootFolder.Traverse(x =>
             {
                 Debug.WriteLine(x.Path);
 
                 // TODO: ...
             });
+
+            // Traverse folders example
+            var fileRefsService = new FileReferenceTraversalService(vault);
+            FileReference fileRefTree = fileRefsService.GetFileReferenceTree(@"C:\EPDMVaults\Training\Built Parts\Universal Joint_&.SLDASM");
+
+            fileRefTree.Traverse(x =>
+           {
+               Debug.WriteLine(x.File.Path);
+               Debug.WriteLine(x.Children.Count);
+
+               // TODO: ...
+           });
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace EpdmStandAloneCS.Models
+namespace PdmProStandAlone.Models
 {
     /// <summary>
     /// Abstract base extended by File and Folder.
@@ -19,7 +19,8 @@ namespace EpdmStandAloneCS.Models
     /// </summary>
     public class File : FileFolderBase
     {
-        public string AcmePartNo { get; set; }
+        public string Number { get; set; }
+        public string Description { get; set; }
     }
 
     /// <summary>
@@ -65,6 +66,39 @@ namespace EpdmStandAloneCS.Models
         /// </summary>
         /// <param name="action"></param>
         public void Traverse(Action<FileFolderBase> action)
+        {
+            TraverseRecursive(this, action);
+        }
+    }
+
+    /// <summary>
+    /// Encapsulates an individual parent/child file reference.
+    /// </summary>
+    public class FileReference
+    {
+        //public string Name { get; set; }
+        //public string Path { get; set; }
+        //public string Number { get; set; }
+        //public string Description { get; set; }
+
+        // No need to redefine the above just have File property
+        public File File { get; set; }
+
+        public List<FileReference> Children { get; set; } = new List<FileReference>();
+
+        private void TraverseRecursive(FileReference fileRef, Action<FileReference> action)
+        {
+            foreach (FileReference childRef in fileRef.Children)
+            {
+                // recurse
+                TraverseRecursive(childRef, action);
+
+                // invoke delegate
+                action(childRef);
+            }
+        }
+
+        public void Traverse(Action<FileReference> action)
         {
             TraverseRecursive(this, action);
         }
