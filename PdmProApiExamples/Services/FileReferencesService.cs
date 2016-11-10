@@ -60,7 +60,7 @@ namespace PdmProStandAlone
             fileRef.Traverse(x =>
             {
                 Debug.WriteLine(x.File.Path);
-                listing.AddFileCfg(x.File.Path, DateTime.Now, x.File.Id, "@", (int)EdmListFileFlags.EdmList_Nothing);
+                listing.AddFileCfg(x.File.Path, DateTime.Now, x.File.Id, config, (int)EdmListFileFlags.EdmList_Nothing);
             });
 
             // create the list
