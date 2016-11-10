@@ -10,6 +10,7 @@ namespace PdmProStandAlone.Models
     /// </summary>
     public abstract class FileFolderBase
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Path { get; set; }
     }
@@ -19,6 +20,7 @@ namespace PdmProStandAlone.Models
     /// </summary>
     public class File : FileFolderBase
     {
+        public int FolderId { get; set; }
         public string Number { get; set; }
         public string Description { get; set; }
     }
@@ -28,6 +30,7 @@ namespace PdmProStandAlone.Models
     /// </summary>
     public class Folder : FileFolderBase 
     {
+        public int? ParentFolderId { get; set; }
         public List<File> Files { get; set; } = new List<File>();
         public List<Folder> Subfolders { get; set; } = new List<Folder>();
 
@@ -86,21 +89,56 @@ namespace PdmProStandAlone.Models
 
         public List<FileReference> Children { get; set; } = new List<FileReference>();
 
+        /// <summary>
+        /// Executes an action for each reference in the argument tree recursively.
+        /// </summary>
+        /// <param name="fileRef"></param>
+        /// <param name="action"></param>
         private void TraverseRecursive(FileReference fileRef, Action<FileReference> action)
         {
-            foreach (FileReference childRef in fileRef.Children)
-            {
-                // recurse
-                TraverseRecursive(childRef, action);
+            // invoke delegate
+            action(fileRef);
 
-                // invoke delegate
-                action(childRef);
-            }
+            // recurse for each child
+            foreach (FileReference childRef in fileRef.Children)
+                TraverseRecursive(childRef, action);
         }
 
+        /// <summary>
+        /// Executes an action for each reference in the tree recursively, beginning with the instance itself.
+        /// </summary>
+        /// <param name="fileRef"></param>
+        /// <param name="action"></param>
         public void Traverse(Action<FileReference> action)
         {
+            // just call private overload on this
             TraverseRecursive(this, action);
+        }
+
+        /// <summary>
+        /// Provides deferred iteration over all the nodes of the tree of the argument FileReference node recursively.
+        /// This (private) was designed simply to be called from public overload.
+        /// </summary>
+        /// <param name="fileRef"></param>
+        /// <returns></returns>
+        private IEnumerable<FileReference> Enumerate(FileReference fileRef)
+        {
+            yield return fileRef;
+
+            // recurse for each child
+            // the nested foreach is required to achieve recursion w/yield
+            foreach (FileReference childRef in fileRef.Children)
+                foreach (var grandChild in Enumerate(childRef)) // <-- recursion here...
+                    yield return grandChild;
+        }
+
+        /// <summary>
+        /// Provides deferred iteration over all the nodes of in this node's tree starting with the instance itself.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<FileReference> Enumerate()
+        {
+            return Enumerate(this);
         }
     }
 }

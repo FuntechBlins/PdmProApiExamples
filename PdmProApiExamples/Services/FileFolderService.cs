@@ -2,12 +2,12 @@
 using EPDM.Interop.epdm;
 using PdmProStandAlone.Models;
 
-namespace PdmProStandAlone
+namespace PdmProStandAlone.Services
 {
     /// <summary>
     /// Examples of PDM vault folder/file traversal.
     /// </summary>
-    public static class FolderTraversal
+    public static class FileFolderService
     {
         /// <summary>
         /// Traverses an argument vault folder object recursively and returns a <see cref="Folder"/> instance 
@@ -20,6 +20,8 @@ namespace PdmProStandAlone
         {
             Folder folderOut = new Folder()
             {
+                Id = folder.ID,
+                ParentFolderId = folder.ParentFolder == null ? null : new int?(folder.ParentFolder.ID), // This guards against a potential NullReferenceException only for the vault root folder because it will have a null ParentFolder value.
                 Name = folder.Name,
                 Path = folder.LocalPath,
             };
@@ -32,6 +34,7 @@ namespace PdmProStandAlone
 
                 var file = new File()
                 {
+                    Id = edmFile.ID,
                     Name = edmFile.Name,
                     Path = edmFile.GetLocalPath(folder.ID)
                     // TODO: AcmePartNo = ....

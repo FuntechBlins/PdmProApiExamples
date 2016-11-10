@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using EPDM.Interop.epdm;
 using PdmProStandAlone.Models;
-using System.Collections.Generic;
+using System.Linq;
+using PdmProStandAlone.Services;
 
 namespace PdmProStandAlone
 {
-    public class MyObject
-    {
-        public int Id { get; set; }
-        public string Something { get; set; }
-        public string SomethingElse { get; set; }
-    }
-
     static class Program
     {
         /// <summary>
@@ -22,43 +15,26 @@ namespace PdmProStandAlone
         [STAThread]
         static void Main()
         {
-            IEdmVault13 vault = (IEdmVault13)new EdmVault5();
+            IEdmVault13 vault = VaultSingleton.Instance;
 
-            // Login... 
-            try
+            VaultHelper vaultHelper = new VaultHelper(vault);
+
+            // everything below here is predicated on being logged in...
+            string error = null;
+            if (!vaultHelper.TryLoginAuto(out error))
             {
-                // A real world application will usually need to implement a try/catch pattern around LoginAuto becuase even something seemingly 
-                // benign like the user clicking the X button in the subsequently displayed PDM login dialog (blocks thread) box WILL cause 
-                // LoginAuto to throw a COMException. This is the intended behavior of the API, many different members defined on various 
-                // interface types across the PDM API are designed to relay COM HRESULT values to .NET like this by throwing a new/related COMException.
-
-                vault.LoginAuto("Training", 0);
+                Debug.WriteLine(error);
             }
-            catch (COMException comEx)
+            else
             {
-                Debug.WriteLine(comEx.Message);
+                // Login success (or EdmServer was already logged in)
+
+                var ex1 = new MapFolderExample();
+                ex1.MapFolder();
+
+                var ex2 = new MapFileReferenceExample();
+                ex2.MapFileReferenceWithVariableValues();            
             }
-
-            // Traverse folders example
-            Folder rootFolder = FolderTraversal.GetFolderTree(vault.RootFolder);
-            rootFolder.Traverse(x =>
-            {
-                Debug.WriteLine(x.Path);
-
-                // TODO: ...
-            });
-
-            // Traverse folders example
-            var fileRefsService = new FileReferenceTraversalService(vault);
-            FileReference fileRefTree = fileRefsService.GetFileReferenceTree(@"C:\EPDMVaults\Training\Built Parts\Universal Joint_&.SLDASM");
-
-            fileRefTree.Traverse(x =>
-           {
-               Debug.WriteLine(x.File.Path);
-               Debug.WriteLine(x.Children.Count);
-
-               // TODO: ...
-           });
         }
     }
 }
