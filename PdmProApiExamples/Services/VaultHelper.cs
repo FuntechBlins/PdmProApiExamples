@@ -8,6 +8,10 @@ using System.Text;
 
 namespace PdmProStandAlone.Services
 {
+
+    /// <summary>
+    /// 
+    /// </summary>
     public class VaultHelper
     {
         readonly IEdmVault13 _vault;
@@ -18,8 +22,8 @@ namespace PdmProStandAlone.Services
         }
 
         /// <summary>
-        /// Wraps call to <see cref="IEdmVault5.LoginAuto(string, int)"/> in a try/catch and handles <see cref="COMException"/> (see error param).  
-        /// </summary>
+        /// Wraps call to <see cref="IEdmVault5.LoginAuto(string, int)"/> in a try/catch and handles <see cref="COMException"/> (see error param).
+        /// </summary>"
         /// <param name="error">The value of the Message property of the exception (if a <see cref="COMException"/> was thrown).</param>
         /// <returns></returns>
         public bool TryLoginAuto(out string error)

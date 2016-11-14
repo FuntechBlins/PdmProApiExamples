@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{12FCF002-2
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdmProAddIn", "PdmProAddIn\PdmProAddIn.csproj", "{595A897C-20E3-4666-8674-A88ABB8EDBA2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,14 @@ Global
 		{AF6A5C47-82DE-42BE-BECB-E69018D5F970}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AF6A5C47-82DE-42BE-BECB-E69018D5F970}.Release|x86.ActiveCfg = Release|Any CPU
 		{AF6A5C47-82DE-42BE-BECB-E69018D5F970}.Release|x86.Build.0 = Release|Any CPU
+		{595A897C-20E3-4666-8674-A88ABB8EDBA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{595A897C-20E3-4666-8674-A88ABB8EDBA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{595A897C-20E3-4666-8674-A88ABB8EDBA2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{595A897C-20E3-4666-8674-A88ABB8EDBA2}.Debug|x86.Build.0 = Debug|Any CPU
+		{595A897C-20E3-4666-8674-A88ABB8EDBA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{595A897C-20E3-4666-8674-A88ABB8EDBA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{595A897C-20E3-4666-8674-A88ABB8EDBA2}.Release|x86.ActiveCfg = Release|Any CPU
+		{595A897C-20E3-4666-8674-A88ABB8EDBA2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
