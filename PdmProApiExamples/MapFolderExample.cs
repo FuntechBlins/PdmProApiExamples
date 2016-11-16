@@ -3,6 +3,7 @@ using System.Diagnostics;
 using PdmProStandAlone.Models;
 using PdmProStandAlone.Services;
 using EPDM.Interop.epdm;
+using PdmProAddIn.Services;
 
 namespace PdmProStandAlone
 {

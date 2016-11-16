@@ -17,17 +17,22 @@
             <Setter Property="HorizontalContentAlignment" Value="Center" />
         </Style>
     </UserControl.Resources>
+    
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        
+        <!-- The parent (selected) file -->
         <TextBlock Text="{Binding ParentFilePath, StringFormat='Selected parent: {0}'}" />
+        
+        <!-- Search Results List -->
         <ListView Grid.Row="1" ItemsSource="{Binding Results}">
             <ListView.Resources>
                 <Style TargetType="ListViewItem">
-                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Style>
             </ListView.Resources>
             <ListView.ItemTemplate>
@@ -39,13 +44,18 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        
+        <!-- Buttons -->
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
+                <!--<ColumnDefinition Width="Auto" />-->
             </Grid.ColumnDefinitions>
             <TextBlock Text="{Binding Results.Count, StringFormat='{}{0} results'}" />
             <Button Grid.Column="1" Content="OK" Command="{Binding OkCommand}" />
+            <!--<Button Grid.Column="2" Content="Cancel" Command="{Binding CancelCommand}" />-->
         </Grid>
+      
     </Grid>
 </UserControl>

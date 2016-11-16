@@ -4,6 +4,7 @@ using EPDM.Interop.epdm;
 using PdmProStandAlone.Models;
 using System.Linq;
 using PdmProStandAlone.Services;
+using PdmProAddIn.Services;
 
 namespace PdmProStandAlone
 {
@@ -21,7 +22,7 @@ namespace PdmProStandAlone
 
             // everything below here is predicated on being logged in...
             string error = null;
-            if (!vaultHelper.TryLoginAuto(out error))
+            if (!vaultHelper.TryLoginAuto("Training", out error))
             {
                 Debug.WriteLine(error);
             }

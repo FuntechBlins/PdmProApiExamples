@@ -1,12 +1,17 @@
-﻿using EPDM.Interop.epdm;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace PdmProStandAlone.Services
+#if PDM_STANDALONE
+using EPDM.Interop.epdm;
+#else
+using EdmLib;
+#endif
+
+namespace PdmProAddIn.Services
 {
 
     /// <summary>
@@ -26,7 +31,7 @@ namespace PdmProStandAlone.Services
         /// </summary>"
         /// <param name="error">The value of the Message property of the exception (if a <see cref="COMException"/> was thrown).</param>
         /// <returns></returns>
-        public bool TryLoginAuto(out string error)
+        public bool TryLoginAuto(string vaultName, out string error)
         {
             error = null;
 
@@ -42,7 +47,7 @@ namespace PdmProStandAlone.Services
                 // LoginAuto to throw a COMException. This is the intended behavior of the API, many different members defined on various 
                 // interface types across the PDM API are designed to relay COM HRESULT values to .NET like this by throwing a new/related COMException.
 
-                _vault.LoginAuto("Training", 0);
+                _vault.LoginAuto(vaultName, 0);
 
                 return true; // no exception thrown...
             }

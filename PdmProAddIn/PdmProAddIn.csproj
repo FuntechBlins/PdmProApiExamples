@@ -51,6 +51,10 @@
     <Compile Include="AAFileRefsWindow.xaml.cs">
       <DependentUpon>AAFileRefsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\CustomRefsService.cs" />
+    <Compile Include="Services\VaultHelper.cs" />
+    <Compile Include="Services\VaultSearch.cs" />
+    <Compile Include="Services\VaultSingleton.cs" />
     <Compile Include="ViewModels\AAFileRefsViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\AAFileRefsView.xaml.cs">

@@ -12,7 +12,8 @@ namespace PdmProAddIn.Test
         {
             UITests test = new Test.UITests();
 
-            test.ShowWindowTest();
+            //test.ShowWindowTest();
+            test.ShowWindowPdmTest();
         }
     }
 }

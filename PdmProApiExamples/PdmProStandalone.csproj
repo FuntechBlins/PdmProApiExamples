@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;PDM_STANDALONE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -47,6 +47,12 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\PdmProAddIn\Services\VaultHelper.cs">
+      <Link>Services\VaultHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\PdmProAddIn\Services\VaultSingleton.cs">
+      <Link>Services\VaultSingleton.cs</Link>
+    </Compile>
     <Compile Include="Services\Abstract\VaultServiceBase.cs" />
     <Compile Include="MapFileReferenceExample.cs" />
     <Compile Include="MapFolderExample.cs" />
@@ -55,8 +61,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\FileFolderService.cs" />
-    <Compile Include="Services\VaultSingleton.cs" />
-    <Compile Include="Services\VaultHelper.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -77,7 +81,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -60,11 +60,16 @@ namespace PdmProAddIn.ViewModels
 
     public class AAFileRefsViewModel : ViewModel
     {
-        public AAFileRefsViewModel(string parentFilePath, IEnumerable<AAFileRef> fileRefs)
+        Action _close;
+
+        public AAFileRefsViewModel(string parentFilePath, IEnumerable<AAFileRef> fileRefs, Action close)
         {
             this._parentFilePath = parentFilePath;
             this.OkCommand = new DelegateCommand(Ok, CanOk);
             this.Results = new ObservableCollection<AAFileRefViewModel>(fileRefs.Select(x => new AAFileRefViewModel(this, x)));
+
+            // This is a bit of a hack...
+            _close = close;
         }
 
         public ObservableCollection<AAFileRefViewModel> Results { get; set; }
@@ -92,7 +97,10 @@ namespace PdmProAddIn.ViewModels
         public void Ok()
         {
             OkWasClicked = true;
+
+            _close();
         }
+
         public bool CanOk()
         {
             return Results.Any(x => x.IsIncluded == true);
